@@ -79,6 +79,30 @@ models:
       - name: ads_click
         description: Sum of click by day
 
+  - name: finance_campaigns_day
+    description: join from finance and campaign by day
+    columns:
+      - name: date_date
+        description: primary key
+        tests:
+          - unique
+      - name: ads_margin
+        description: operational_margin - ads_cost
+      - name: ads_cost
+        description: Sum cost
+        tests:
+          - not_null
+      - name: ads_impression
+        description: Sum impression
+        tests:
+          - not_null
+      - name: ads_click
+        description: Sum click
+        tests:
+          - not_null
+              
+
+
 sources:
   - name: raw
     schema: gz_raw_data
