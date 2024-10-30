@@ -1,0 +1,103 @@
+version: 2
+
+models:
+  - name: int_sales_margin
+    description: Add purchase cost and margin
+    columns:
+      - name: date_date
+      - name: products_id
+        description: primary key with orders_id
+        tests: 
+          - relationships:
+              field: products_id
+              to: ref('stg_raw__product')
+      - name: orders_id
+        description: primary key with products_id
+        tests:
+          - relationships:
+              field: orders_id
+              to: ref('stg_raw__sales')
+      - name: purchase_cost
+      - name: margin    
+
+  - name: int_orders_margin
+    description: revenue, quantity, purchase_cost and margin grouped by order
+    columns:
+      - name: orders_id
+        description: primary key
+        tests:
+          - unique
+
+  - name: int_orders_operational
+    description: Add operational margin
+    columns:
+      - name: date_date
+      - name: orders_id
+        description: primary key
+        tests:
+          - unique
+      - name: operational_margin
+        description: margin + shipping_fee - logcost - ship_cost
+  - name: finance_days
+    description: nb_transactions/revenue/average_basket/margin/operational_margin/purchase_cost/shipping_fee/log_cost/quantity grouped by days
+    columns:
+      - name: date_date
+        description: primary key
+        tests:
+          - unique
+    
+          
+  
+          
+              
+
+sources:
+  - name: raw
+    schema: gz_raw_data
+    tables:
+      - name: product
+        identifier: raw_gz_product
+        description: products & price
+        columns:
+          - name: products_id
+            description: primary key
+            tests:
+              - unique
+              - not_null
+          - name: purchase_price
+            description: price
+      - name: sales
+        identifier: raw_gz_sales
+        description: date of sales & revenue
+        freshness:
+          warn_after: { count: 90, period: day }
+        loaded_at_field: "CAST(date_date AS TIMESTAMP)"
+        columns:
+          - name: date_date
+            description: date of purchase
+          - name: orders_id
+            description: primary key with products_id
+          - name: pdt_id
+            description: primary key with orders_id
+          - name: revenue
+            description: turnover by sales of products
+          - name: quantity
+            description: number of product sold
+        tests:
+          - unique:
+              column_name: "(orders_id || '-' || pdt_id)"
+      - name: ship
+        identifier: raw_gz_ship
+        description: infos for shipping by orders
+        columns:
+          - name: orders_id
+            description: primary key
+            tests:
+              - unique
+              - not_null
+          - name: shipping_fee
+            description: "client fee"
+          - name: logCost
+            description: logistic cost
+          - name: ship_cost
+            description: cost of shipping
