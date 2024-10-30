@@ -1,13 +1,14 @@
 version: 2
 
 models:
+
   - name: int_sales_margin
     description: Add purchase cost and margin
     columns:
       - name: date_date
       - name: products_id
         description: primary key with orders_id
-        tests: 
+        tests:
           - relationships:
               field: products_id
               to: ref('stg_raw__product')
@@ -18,7 +19,7 @@ models:
               field: orders_id
               to: ref('stg_raw__sales')
       - name: purchase_cost
-      - name: margin    
+      - name: margin
 
   - name: int_orders_margin
     description: revenue, quantity, purchase_cost and margin grouped by order
@@ -45,11 +46,38 @@ models:
         description: primary key
         tests:
           - unique
-    
-          
   
-          
-              
+  - name: int_campaigns.sql
+    description: all advertisers join
+    columns:
+      - name: date_date
+        description: primary key with campaign_key
+      - name: paid_source
+        description: name of advertiser
+      - name: campaign_key
+        description: primary key with date_date
+      - name: camPGN_name
+        description: campaign name
+      - name: ads_cost
+        description: advertisement cost
+      - name: impression
+        description: number of mail
+      - name: click
+        description: number of click
+
+  - name: int_campaigns_day
+    description: aggregated version of int_campaigns model for each day
+    columns:
+      - name: date_date
+        description: primary key
+        tests:
+          - unique
+      - name: ads_cost
+        description: Sum of cost by day
+      - name: ads_impression
+        description: Sum of impression by day
+      - name: ads_click
+        description: Sum of click by day
 
 sources:
   - name: raw
@@ -185,4 +213,3 @@ sources:
         tests:
           - unique:
               column_name: "(date_date || '-' || campaign_key)"
-      
