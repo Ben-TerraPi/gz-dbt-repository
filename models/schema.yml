@@ -101,3 +101,88 @@ sources:
             description: logistic cost
           - name: ship_cost
             description: cost of shipping
+      - name: adwords
+        identifier: raw_gz_adwords
+        description: adwords campaign
+        columns:
+          - name: date_date
+            description: primary key with campaign_key
+          - name: paid_source
+            description: name of advertiser
+          - name: campaign_key
+            description: primary key with date_date
+          - name: camPGN_name
+            description: campaign name
+          - name: ads_cost
+            description: advertisement cost
+          - name: impression
+            description: number of mail
+          - name: click
+            description: number of click
+        tests:
+          - unique:
+              column_name: "(odate_date || '-' || campaign_key)"
+      - name: bing
+        identifier: aw_gz_bing
+        description: bing campaign
+        columns:
+          - name: date_date
+            description: primary key with campaign_key
+          - name: paid_source
+            description: name of advertiser
+          - name: campaign_key
+            description: primary key with date_date
+          - name: camPGN_name
+            description: campaign name
+          - name: ads_cost
+            description: advertisement cost
+          - name: impression
+            description: number of mail
+          - name: click
+            description: number of click
+        tests:
+          - unique:
+              column_name: "(odate_date || '-' || campaign_key)"
+      - name: criteo
+        identifier: raw_gz_criteo
+        description: criteo campaign
+        columns:
+          - name: date_date
+            description: primary key with campaign_key
+          - name: paid_source
+            description: name of advertiser
+          - name: campaign_key
+            description: primary key with date_date
+          - name: camPGN_name
+            description: campaign name
+          - name: ads_cost
+            description: advertisement cost
+          - name: impression
+            description: number of mail
+          - name: click
+            description: number of click
+        tests:
+          - unique:
+              column_name: "(odate_date || '-' || campaign_key)"
+      - name: facebook
+        identifier: raw_gz_facebook
+        description: facebook campaign
+        columns:
+          - name: date_date
+            description: primary key with campaign_key
+          - name: paid_source
+            description: name of advertiser
+          - name: campaign_key
+            description: primary key with date_date
+          - name: camPGN_name
+            description: campaign name
+          - name: ads_cost
+            description: advertisement cost
+          - name: impression
+            description: number of mail
+          - name: click
+            description: number of click
+        tests:
+          - unique:
+              column_name: "(odate_date || '-' || campaign_key)"
+      
