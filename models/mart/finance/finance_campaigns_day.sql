@@ -15,3 +15,4 @@ log_cost
 FROM {{ ref('finance_days') }} AS finance
 LEFT JOIN {{ ref('int_campaigns_day') }} AS campaign
 USING (date_date)
+ORDER BY date_date DESC
