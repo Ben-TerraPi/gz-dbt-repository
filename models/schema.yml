@@ -121,9 +121,9 @@ sources:
             description: number of click
         tests:
           - unique:
-              column_name: "(odate_date || '-' || campaign_key)"
+              column_name: "(date_date || '-' || campaign_key)"
       - name: bing
-        identifier: aw_gz_bing
+        identifier: raw_gz_bing
         description: bing campaign
         columns:
           - name: date_date
@@ -142,7 +142,7 @@ sources:
             description: number of click
         tests:
           - unique:
-              column_name: "(odate_date || '-' || campaign_key)"
+              column_name: "(date_date || '-' || campaign_key)"
       - name: criteo
         identifier: raw_gz_criteo
         description: criteo campaign
@@ -163,7 +163,7 @@ sources:
             description: number of click
         tests:
           - unique:
-              column_name: "(odate_date || '-' || campaign_key)"
+              column_name: "(date_date || '-' || campaign_key)"
       - name: facebook
         identifier: raw_gz_facebook
         description: facebook campaign
@@ -184,5 +184,5 @@ sources:
             description: number of click
         tests:
           - unique:
-              column_name: "(odate_date || '-' || campaign_key)"
+              column_name: "(date_date || '-' || campaign_key)"
       
